@@ -1,0 +1,4 @@
+name: Entity_AI
+version: '${version}'
+main: org.se0k.entity_ai.Entity_AI
+api-version: '1.20'
