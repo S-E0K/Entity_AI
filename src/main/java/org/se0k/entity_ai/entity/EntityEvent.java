@@ -2,14 +2,14 @@ package org.se0k.entity_ai.entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import java.util.UUID;
 
-import static org.se0k.entity_ai.entity.EntityController.spawnEntity;
+import static org.se0k.entity_ai.entity.EntityController.*;
 
 public class EntityEvent implements Listener {
 
@@ -20,11 +20,25 @@ public class EntityEvent implements Listener {
 
         UUID entityUUID = entity.getUniqueId();
 
-        if (!spawnEntity.containsKey(entityUUID)) return;
+        if (targetEntity.containsKey(entityUUID)) {
 
-        spawnEntity.remove(entityUUID);
+            targetEntity.remove(entityUUID);
 
-        if (spawnEntity.isEmpty()) Bukkit.getConsoleSender().sendMessage("다 죽었음");
+            if (targetEntity.isEmpty()) {
+                Bukkit.getConsoleSender().sendMessage("타겟 다 주금");
+                for (Zombie zombie : spawnEntity.values()) {
+                    zombie.setAI(false);
+                }
+            }
+        }
+
+        if (spawnEntity.containsKey(entityUUID)) {
+            spawnEntity.remove(entityUUID);
+
+            if (spawnEntity.isEmpty()) Bukkit.getConsoleSender().sendMessage("다 죽었음");
+        }
+
+
     }
 
 }

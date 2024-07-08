@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +21,7 @@ import static org.se0k.entity_ai.Entity_AI.plugin;
 public class EntityController implements EntityControl {
 
     static Map<UUID, Zombie> spawnEntity = new HashMap<>();
+    public static Map<UUID, Entity> targetEntity = new HashMap<>();
 
     int spawnDelay = 0;
 
@@ -27,11 +30,11 @@ public class EntityController implements EntityControl {
 
         World world = player.getWorld();
 
-        Location location = player.getLocation().add(player.getLocation().getDirection().multiply(3));
-
+//        Location location = player.getLocation().add(player.getLocation().getDirection().multiply(3));
+        Location location = player.getLocation();
         if (spawnDelay == 0) {
 
-            if (spawnEntity.size() >= 5) {
+            if (spawnEntity.size() >= 4) {
                 player.sendMessage("전부 소환했습니다");
                 return;
             }
@@ -64,11 +67,9 @@ public class EntityController implements EntityControl {
     }
 
     @Override
-    public void EntityMove(Player player) {
+    public void EntityMove(Player player, Location location) {
 
         if (spawnEntity.isEmpty()) return;
-
-        Location location = player.getLocation().add(player.getLocation().getDirection().multiply(10));
 
         for (Zombie zombie : spawnEntity.values()) {
 
@@ -77,20 +78,37 @@ public class EntityController implements EntityControl {
             zombie.setAI(true);
             Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
                 zombie.getPathfinder().moveTo(location, 2);
+
                 Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
                     zombie.setAI(false);
                 }, 20 * 5);
+
             }, 5);
         }
     }
 
     @Override
-    public void EntityAttack(Player player) {
-
+    public void EntityAttack(Player player, Entity entity) {
+        for (Zombie zombie : spawnEntity.values()) {
+            zombie.setAI(true);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
+                zombie.setTarget((LivingEntity) entity);
+            }, 5);
+        }
     }
 
     @Override
     public void EntitySurround(Player player) {
+
+        for (Zombie zombie : spawnEntity.values()) {
+
+
+
+
+
+        }
+
+
 
     }
 }
