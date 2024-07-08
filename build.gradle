@@ -59,5 +59,5 @@ processResources {
 
 jar {
     archiveFileName = project.name + ".jar"
-    destinationDirectory.set(file("C:\\Users\\User\\Desktop\\강의 서버 저장\\몬스터AI\\plugins"))
+    destinationDirectory.set(file("C:\\Users\\User\\Desktop\\강의 서버\\몬스터AI\\plugins"))
 }
