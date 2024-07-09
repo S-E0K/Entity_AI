@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.se0k.entity_ai.effect.EffectControl;
+import org.se0k.entity_ai.effect.EffectController;
 
 import java.util.*;
 
@@ -21,6 +23,9 @@ public class EntityController implements EntityControl {
     static Map<UUID, Zombie> spawnEntity = new HashMap<>();
     public static Map<UUID, Entity> targetEntity = new HashMap<>();
 
+    EffectControl effectControl = new EffectController();
+
+
     int spawnDelay = 0;
 
     @Override
@@ -29,7 +34,7 @@ public class EntityController implements EntityControl {
         World world = player.getWorld();
 
         Location location = player.getLocation().add(player.getLocation().getDirection().multiply(3));
-        location.add(0, 3, 0);
+        location.add(0, 2, 0);
 
         if (spawnDelay == 0) {
 
@@ -39,14 +44,19 @@ public class EntityController implements EntityControl {
             }
 
             world.spawn(location, Zombie.class, zombie -> {
-                player.sendMessage("소환");
-                zombie.setAI(true);
+                zombie.lookAt(player);
+                zombie.setAI(false);
                 zombie.setBaby(false);
                 zombie.getEquipment().setHelmet(new ItemStack(Material.GOLDEN_HELMET, 1));
                 spawnEntity.put(zombie.getUniqueId(), zombie);
+                effectControl.effectSet(player);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
+                    zombie.setAI(true);
+                }, 20 * 2);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
                     zombie.setAI(false);
-                }, 20);
+                }, 20 * 3);
+
             });
 
             spawnDelay = 3;

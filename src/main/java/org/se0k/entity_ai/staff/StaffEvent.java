@@ -22,6 +22,7 @@ public class StaffEvent implements Listener {
     boolean isSneak = false;
     EntityControl entityControl = new EntityController();
 
+
     @EventHandler
     public void staffRightClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -33,7 +34,6 @@ public class StaffEvent implements Listener {
         if (action.isRightClick()) {
             if (isSneak) {
                 entityControl.EntitySpawn(player);
-//                player.sendMessage("소환");
             }
             else {
                 Location location;
@@ -44,7 +44,6 @@ public class StaffEvent implements Listener {
                     location = player.getLocation().add(player.getLocation().getDirection().multiply(10));
                 }
                 entityControl.EntityMove(player, location);
-//                player.sendMessage("이동");
             }
         }
 
@@ -53,7 +52,6 @@ public class StaffEvent implements Listener {
         if (action.isLeftClick()) {
             if (isSneak) {
                 entityControl.EntitySurround(player, entity);
-//                player.sendMessage("포위");
             }
             else {
                 if (!targetEntity.isEmpty()) {
@@ -62,7 +60,6 @@ public class StaffEvent implements Listener {
                 }
                 targetEntity.put(entity.getUniqueId(), entity);
                 entityControl.EntityAttack(player, entity);
-//                player.sendMessage("공격");
             }
         }
     }
@@ -78,7 +75,6 @@ public class StaffEvent implements Listener {
 
         if (isSneak) {
             entityControl.EntitySurround(player, entity);
-//            player.sendMessage("포위");
         }
         else {
             if (!targetEntity.isEmpty()) {
@@ -87,7 +83,6 @@ public class StaffEvent implements Listener {
             }
             targetEntity.put(entity.getUniqueId(), entity);
             entityControl.EntityAttack(player, entity);
-//            player.sendMessage("공격");
         }
     }
 
