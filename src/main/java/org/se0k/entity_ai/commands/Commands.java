@@ -32,7 +32,6 @@ public class Commands extends BukkitCommand {
         return false;
     }
 
-
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) {
 //        if (args.length == 1) return Arrays.asList("in", "out", "set", "start", "end", "stage", "start");

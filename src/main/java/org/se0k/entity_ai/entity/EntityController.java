@@ -11,9 +11,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static org.se0k.entity_ai.Entity_AI.instance;
 import static org.se0k.entity_ai.Entity_AI.plugin;
@@ -30,8 +28,9 @@ public class EntityController implements EntityControl {
 
         World world = player.getWorld();
 
-//        Location location = player.getLocation().add(player.getLocation().getDirection().multiply(3));
-        Location location = player.getLocation();
+        Location location = player.getLocation().add(player.getLocation().getDirection().multiply(3));
+        location.add(0, 3, 0);
+
         if (spawnDelay == 0) {
 
             if (spawnEntity.size() >= 4) {
@@ -40,6 +39,7 @@ public class EntityController implements EntityControl {
             }
 
             world.spawn(location, Zombie.class, zombie -> {
+                player.sendMessage("소환");
                 zombie.setAI(true);
                 zombie.setBaby(false);
                 zombie.getEquipment().setHelmet(new ItemStack(Material.GOLDEN_HELMET, 1));
@@ -64,6 +64,7 @@ public class EntityController implements EntityControl {
         } else {
             player.sendMessage(spawnDelay + "초 남았습니다");
         }
+
     }
 
     @Override
@@ -79,12 +80,18 @@ public class EntityController implements EntityControl {
             Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
                 zombie.getPathfinder().moveTo(location, 2);
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
-                    zombie.setAI(false);
-                }, 20 * 5);
-
-            }, 5);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (zombie.getLocation().distance(location) <= 2) {
+                            zombie.setAI(false);
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(instance, 0L, 20L);
+            }, 10);
         }
+        player.sendMessage("이동");
     }
 
     @Override
@@ -95,20 +102,42 @@ public class EntityController implements EntityControl {
                 zombie.setTarget((LivingEntity) entity);
             }, 5);
         }
+        player.sendMessage("공격");
     }
 
     @Override
-    public void EntitySurround(Player player) {
+    public void EntitySurround(Player player, Entity entity) {
+        int i = 0;
+
+        Location entityLoc = entity.getLocation();
+
+        List<Location> direction = Arrays.asList(
+                entityLoc.clone().add(2.0, 0, 0),
+                entityLoc.clone().add(-2.0, 0, 0),
+                entityLoc.clone().add(0, 0, 2.0),
+                entityLoc.clone().add(0, 0, -2.0)
+        );
 
         for (Zombie zombie : spawnEntity.values()) {
+            zombie.setAI(true);
+            Location targetLoc = direction.get(i);
 
+            Bukkit.getScheduler().scheduleSyncDelayedTask(instance, () -> {
+                zombie.getPathfinder().moveTo(targetLoc, 2);
 
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (zombie.getLocation().distance(targetLoc) <= 2) {
+                            zombie.setAI(false);
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(instance, 0L, 20L);
 
-
-
+            }, 10);
+            i++;
         }
-
-
-
+        player.sendMessage("포위");
     }
 }

@@ -8,5 +8,5 @@ public interface EntityControl {
     void EntitySpawn(Player player);
     void EntityMove(Player player, Location location);
     void EntityAttack(Player player, Entity entity);
-    void EntitySurround(Player player);
+    void EntitySurround(Player player, Entity entity);
 }

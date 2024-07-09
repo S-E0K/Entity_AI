@@ -17,13 +17,10 @@ public class EntityEvent implements Listener {
     public void EntityDeath(EntityDeathEvent event) {
 
         Entity entity = event.getEntity();
-
         UUID entityUUID = entity.getUniqueId();
 
         if (targetEntity.containsKey(entityUUID)) {
-
             targetEntity.remove(entityUUID);
-
             if (targetEntity.isEmpty()) {
                 Bukkit.getConsoleSender().sendMessage("타겟 다 주금");
                 for (Zombie zombie : spawnEntity.values()) {
@@ -34,11 +31,7 @@ public class EntityEvent implements Listener {
 
         if (spawnEntity.containsKey(entityUUID)) {
             spawnEntity.remove(entityUUID);
-
             if (spawnEntity.isEmpty()) Bukkit.getConsoleSender().sendMessage("다 죽었음");
         }
-
-
     }
-
 }

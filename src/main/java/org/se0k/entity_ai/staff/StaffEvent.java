@@ -20,23 +20,22 @@ import static org.se0k.entity_ai.entity.EntityController.targetEntity;
 public class StaffEvent implements Listener {
 
     boolean isSneak = false;
-
     EntityControl entityControl = new EntityController();
 
     @EventHandler
     public void staffRightClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-
         Action action = event.getAction();
-
         Entity entity = player.getTargetEntity(30);
 
         if (player.getInventory().getItemInMainHand().getType() != Material.STICK) return;
 
         if (action.isRightClick()) {
-            if (isSneak) entityControl.EntitySpawn(player);
+            if (isSneak) {
+                entityControl.EntitySpawn(player);
+//                player.sendMessage("소환");
+            }
             else {
-
                 Location location;
                 if (action == Action.RIGHT_CLICK_BLOCK) {
                     location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
@@ -45,33 +44,41 @@ public class StaffEvent implements Listener {
                     location = player.getLocation().add(player.getLocation().getDirection().multiply(10));
                 }
                 entityControl.EntityMove(player, location);
+//                player.sendMessage("이동");
             }
         }
 
+        if (entity == null) return;
+
         if (action.isLeftClick()) {
             if (isSneak) {
-                entityControl.EntitySurround(player);
+                entityControl.EntitySurround(player, entity);
+//                player.sendMessage("포위");
             }
             else {
                 if (!targetEntity.isEmpty()) {
                     player.sendMessage("아직 타겟이 살아있습니다");
                     return;
                 }
+                targetEntity.put(entity.getUniqueId(), entity);
                 entityControl.EntityAttack(player, entity);
+//                player.sendMessage("공격");
             }
         }
     }
 
     @EventHandler
     public void staffLeftClick(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player player)) return;
 
+        if (!(event.getDamager() instanceof Player player)) return;
         if (!player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) return;
+
 
         Entity entity = event.getEntity();
 
         if (isSneak) {
-            entityControl.EntitySurround(player);
+            entityControl.EntitySurround(player, entity);
+//            player.sendMessage("포위");
         }
         else {
             if (!targetEntity.isEmpty()) {
@@ -80,6 +87,7 @@ public class StaffEvent implements Listener {
             }
             targetEntity.put(entity.getUniqueId(), entity);
             entityControl.EntityAttack(player, entity);
+//            player.sendMessage("공격");
         }
     }
 

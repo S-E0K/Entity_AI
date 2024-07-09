@@ -20,7 +20,6 @@ public final class Entity_AI extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new StaffEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityEvent(), this);
-
     }
 
     @Override
