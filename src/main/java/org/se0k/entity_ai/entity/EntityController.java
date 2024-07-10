@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.se0k.entity_ai.effect.EffectControl;
 import org.se0k.entity_ai.effect.EffectController;
+import org.se0k.entity_ai.sound.SoundEffect;
 
 import java.util.*;
 

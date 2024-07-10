@@ -40,7 +40,7 @@ public class EffectController implements EffectControl {
                     }
                     angle += 5;
                     transformation.getLeftRotation().setAngleAxis(angle, 0, 0, 1);
-                    transformation.getScale().add(0.1f, 0.1f, 0.1f);
+                    transformation.getScale().add(0.15f, 0.15f, 0.15f);
                     display.setTransformation(transformation);
                 }
             }.runTaskTimer(plugin, 0, 5);
