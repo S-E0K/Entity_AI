@@ -64,27 +64,27 @@ public class StaffEvent implements Listener {
         }
     }
 
-    @EventHandler
-    public void staffLeftClick(EntityDamageByEntityEvent event) {
-
-        if (!(event.getDamager() instanceof Player player)) return;
-        if (!player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) return;
-
-
-        Entity entity = event.getEntity();
-
-        if (isSneak) {
-            entityControl.EntitySurround(player, entity);
-        }
-        else {
-            if (!targetEntity.isEmpty()) {
-                player.sendMessage("아직 타겟이 살아있습니다");
-                return;
-            }
-            targetEntity.put(entity.getUniqueId(), entity);
-            entityControl.EntityAttack(player, entity);
-        }
-    }
+//    @EventHandler
+//    public void staffLeftClick(EntityDamageByEntityEvent event) {
+//
+//        if (!(event.getDamager() instanceof Player player)) return;
+//        if (!player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) return;
+//
+//
+//        Entity entity = event.getEntity();
+//
+//        if (isSneak) {
+//            entityControl.EntitySurround(player, entity);
+//        }
+//        else {
+//            if (!targetEntity.isEmpty()) {
+//                player.sendMessage("아직 타겟이 살아있습니다");
+//                return;
+//            }
+//            targetEntity.put(entity.getUniqueId(), entity);
+//            entityControl.EntityAttack(player, entity);
+//        }
+//    }
 
     @EventHandler
     public void sneak(PlayerToggleSneakEvent event) {

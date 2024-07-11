@@ -40,10 +40,10 @@ public class EffectController implements EffectControl {
                     }
                     angle += 5;
                     transformation.getLeftRotation().setAngleAxis(angle, 0, 0, 1);
-                    transformation.getScale().add(0.15f, 0.15f, 0.15f);
+                    transformation.getScale().add(0.03f, 0.03f, 0.03f);
                     display.setTransformation(transformation);
                 }
-            }.runTaskTimer(plugin, 0, 5);
+            }.runTaskTimer(plugin, 0, 3);
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(instance, display::remove, 20 * 3);
         });
