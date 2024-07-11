@@ -11,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Transformation;
 
 import static org.se0k.entity_ai.Entity_AI.instance;
-import static org.se0k.entity_ai.Entity_AI.plugin;
 
 public class EffectController implements EffectControl {
     @Override
@@ -43,7 +42,7 @@ public class EffectController implements EffectControl {
                     transformation.getScale().add(0.03f, 0.03f, 0.03f);
                     display.setTransformation(transformation);
                 }
-            }.runTaskTimer(plugin, 0, 3);
+            }.runTaskTimer(instance, 0, 3);
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(instance, display::remove, 20 * 3);
         });

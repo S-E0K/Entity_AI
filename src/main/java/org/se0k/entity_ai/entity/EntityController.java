@@ -17,7 +17,6 @@ import org.se0k.entity_ai.sound.SoundEffect;
 import java.util.*;
 
 import static org.se0k.entity_ai.Entity_AI.instance;
-import static org.se0k.entity_ai.Entity_AI.plugin;
 
 public class EntityController implements EntityControl {
 
@@ -77,7 +76,7 @@ public class EntityController implements EntityControl {
                         cancel();
                     }
                 }
-            }.runTaskTimer(plugin, 0L, 20L);
+            }.runTaskTimer(instance, 0L, 20L);
         } else {
             player.sendMessage(spawnDelay + "초 남았습니다");
         }

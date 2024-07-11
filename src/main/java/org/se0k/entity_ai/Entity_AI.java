@@ -8,12 +8,10 @@ import org.se0k.entity_ai.staff.StaffEvent;
 
 public final class Entity_AI extends JavaPlugin {
 
-    public static Entity_AI plugin;
     public static Entity_AI instance;
 
     @Override
     public void onEnable() {
-        plugin = this;
         instance = this;
 
         Bukkit.getCommandMap().register("magic", new Commands("staff"));

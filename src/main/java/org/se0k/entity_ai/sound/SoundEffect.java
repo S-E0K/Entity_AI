@@ -26,13 +26,13 @@ public class SoundEffect {
                             .write(2, (int) (location.getZ() * 8));
 
         packet.getFloat().write(0, 100.0f)
-                         .write(1, 100.0f);
+                         .write(1, 1.0f);
 
         packet.getLongs().write(0, 0L);
 
         packet.getSoundEffects().write(0, Sound.BLOCK_AMETHYST_BLOCK_CHIME);
 
-        packet.getSoundCategories().write(0, EnumWrappers.SoundCategory.MASTER);
+        packet.getSoundCategories().write(0, EnumWrappers.SoundCategory.PLAYERS);
 
 
         protocolManager.sendServerPacket(player, packet);
